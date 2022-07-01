@@ -1,0 +1,12 @@
+{
+    "visibility": 1,
+    "reload": 3,
+    "mine": 3,
+    "shield": 5,
+    "repair": 3,
+    "SniperMask" : 4,
+    "GunSlinger" : 1,
+    "Akitari" : 3,
+    "Doc" : 3,
+    "shooter": 1
+}

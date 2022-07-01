@@ -1,0 +1,45 @@
+stages:
+  - setup
+  - package
+  - deploy
+
+before_script:
+  - apk add openjdk11
+  - apk add maven
+  - apk add make
+  - apk add lsof
+
+clean-job:
+  stage: setup
+  script:
+    - make -f ./Server/Makefile clean
+
+validate-job:
+  stage: setup
+  script:
+    - make -f ./Server/Makefile validate
+
+compile-job:
+  stage: setup
+  script:
+    - make -f ./Server/Makefile compile
+    - make -f ./Server/Makefile package
+      
+#unittest-test-job:
+#  stage: setup
+#  script:
+#    - make -f ./Server/Makefile <way I call my unittests>
+
+intergration-test-job:
+  stage: setup
+  script:
+    - make -f ./Server/Makefile compile
+    - make -f ./Server/Makefile package
+    - make -f ./Server/Makefile testWorld1
+
+
+
+#The deploy stage is for
+# -make -f ./Server/Makefile release
+# - docker build .
+# - pushing docker image to gitlab registries
