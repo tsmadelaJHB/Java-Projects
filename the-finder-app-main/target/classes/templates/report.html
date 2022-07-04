@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>reporting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<form method="post" action="/report-page" enctype="application/x-www-form-urlencoded">
+
+    <label for="id_number">Insert the ID number of the missing person.</label>
+    <input name="id_number" id="id_number" type="text" autofocus required>
+    <label for="name">Missing person's name?</label>
+    <input name="name" id="name" type="text" autofocus required>
+    <label for="surname">What's his/her surname?</label>
+    <input name="surname" id="surname" type="text" autofocus required>
+    <label for="age">How old is the person?</label>
+    <input name="age" id="age" type="number" autofocus required>
+    <label for="address">Where does she/he live?</label>
+    <input name="address" id="address" type="text" autofocus required>
+    <label for="lastseen">When was the last time you saw them? Please be specific.</label>
+    <input name="lastseen" id="lastseen" type="text" autofocus required>
+    <label for="details">Give us more information. What were they wearing, where were they going or coming from?</label>
+    <input name="details" id="details" type="text" autofocus required>
+    <label for="fileUpload">Please upload a clear imagine of the missing person</label>
+    <input name="fileUpload" id="fileUpload" type="file" accept="image/*" autofocus required>
+    <a href="/" style="color: red;">cancel</a>
+    <input id="submit" type="submit" value="save" style="width: 30%; background-color: blue;" />
+</form>
+</body>
+</html>
