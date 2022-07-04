@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/layout.html}">
+<head>
+    <script type="text/javascript" th:src="@{/js/claimexpense.js}" defer></script>
+</head>
+<body>
+    <h1>WeShare</h1>
+    <p id="user" th:text="${session.user.email}">person@domain.com></p>
+    <nav>
+        <a href="/home">Home</a>
+        <a href="/logout" id="logout" th:text="'Logout ' + ${session.user.name}">Logout Person</a>
+    </nav>
+
+    <main>
+        <div layout:fragment="contents">
+            <div>
+                <h3>Submit a claim for the following expense</h3>
+                            <table>
+                                <tbody>
+                                    <tr th:object="${expense}">
+                                        <td th:text="*{date}" id="expense_date"></td>
+                                        <td th:text="*{description}" id="expense_description"></td>
+                                        <td th:text="*{#numbers.formatDecimal(amount,1,2,'POINT')}" id="expense_amount"></td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+            </div>
+
+            <div  th:style ="${claims.size() > 0} ? 'display: block ;' : 'display: none;'" id="claims_section">
+                            <h3>Previous claims for this expense</h3>
+                            <table id="claims">
+                                <thead>
+                                    <tr>
+                                        <th>Who</th>
+                                        <th>Due</th>
+                                        <th>Settled?</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="claim, claimStat: ${claims}" >
+                                    <td class="text" th:text="${claim.claimedFrom.getName()}" th:id="'claim_who_' + ${claimStat.count}"></td>
+                                    <td class="date" th:text="${claim.dueDate}" th:id="'claim_date_' + ${claimStat.count}"></td>
+                                    <td class="text" th:text="${claim.isSettled()} ? 'Yes' : 'No'" th:id="'claim_settled_' + ${claimStat.count}"></td>
+                                    <td class="money" th:text="${#numbers.formatDecimal(claim.amount,1,2,'POINT')}" th:id="'claim_amount_' + ${claimStat.count}"></td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td id="total_claims" class="total"
+                                        th:text="${#numbers.formatDecimal(expense.totalClaims,1,2,'POINT')}">200.00
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="money">Amount that has not been claimed:</td>
+                                    <td id="unclaimed_amount" class="money"
+                                        th:text="${#numbers.formatDecimal(expense.unclaimedAmount,1,2,'POINT')}">200.00
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+<!--                            <h3 id="total_claims">Total Claims</h3>-->
+<!--                            <h2 id="unclaimed_amount">Amount that has not been claimed</h2>-->
+            </div>
+            <form id="claim_form">
+                label for="email">The email address of the person that should pay you</label>
+                <input id="email" type="email" name="claimFromWho"/>
+                <label for="claim_amount">The amount they should pay</label>
+                <input id="claim_amount" type="number" name="claimAmount">
+                <label for="due_date">By when must this claim be settled</label>
+                <input name="dueDate" id="due_date" type="date"  required>
+                <input id="add_claim" type="submit" value="Add Claim"/>
+            </form>
+        </div>
+
+    </main>
+
+
+</body>
+
+</html>
+
